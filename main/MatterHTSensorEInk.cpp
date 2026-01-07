@@ -23,37 +23,6 @@ uint32_t button_time_stamp = 0;                // debouncing control
 bool button_state = false;                     // false = released | true = pressed
 const uint32_t decommissioningTimeout = 5000;  // keep the button pressed for 5s, or longer, to decommission
 
-// Simulate a humidity sensor - add your preferred humidity sensor library code here
-float getSimulatedHumidity() {
-  // The Endpoint implementation keeps an uint16_t as internal value information,
-  // which stores data in 1/100th of humidity percent
-  static float simulatedHumidityHWSensor = 10.0;
-
-  // it will increase from 10% to 30% in 0.5% steps to simulate a humidity sensor
-  simulatedHumidityHWSensor = simulatedHumidityHWSensor + 0.5;
-  if (simulatedHumidityHWSensor > 30) {
-    simulatedHumidityHWSensor = 10;
-  }
-
-  return simulatedHumidityHWSensor;
-}
-
-// Simulate a temperature sensor - add your preferred temperature sensor library code here
-float getSimulatedTemperature() {
-  // The Endpoint implementation keeps an int16_t as internal value information,
-  // which stores data in 1/100th Celsius.
-  static float simulatedTempHWSensor = -10.0;
-
-  // it will increase from -10C to 10C in 0.5C steps to simulate a temperature sensor
-  simulatedTempHWSensor = simulatedTempHWSensor + 0.5;
-  if (simulatedTempHWSensor > 10) {
-    simulatedTempHWSensor = -10;
-  }
-
-  return simulatedTempHWSensor;
-}
-
-
 void setup() {
   // Initialize the USER BUTTON (Boot button) that will be used to decommission the Matter Node
   pinMode(buttonPin, INPUT_PULLUP);
@@ -80,8 +49,8 @@ void setup() {
 
   // set initial humidity sensor measurement
   // Simulated Sensor - it shall initially print 95% and then move to the 10% to 30% humidity range
-  HumiditySensor.begin(95.00);
-  TemperatureSensor.begin(-25.00);
+  HumiditySensor.begin(0.00);
+  TemperatureSensor.begin(0.00);
 
   // Matter beginning - Last step, after all EndPoints are initialized
   Matter.begin();
