@@ -1,12 +1,22 @@
+#include <Arduino.h>
 #include <Matter.h>
+#include <Wire.h>
+#include <Adafruit_AHTX0.h>
 
 // List of Matter Endpoints for this Node
 // Matter Humidity Sensor Endpoint
-MatterTemperatureSensor SimulatedTemperatureSensor;
-MatterHumiditySensor SimulatedHumiditySensor;
+MatterTemperatureSensor TemperatureSensor;
+MatterHumiditySensor HumiditySensor;
 
 // set your board USER BUTTON pin here - decommissioning button
 const uint8_t buttonPin = BOOT_PIN;  // Set your pin here. Using BOOT Button.
+
+// I2C pins for the AHTx0 sensor
+static const int I2C_SDA_PIN = GPIO_NUM_22; //D4
+static const int I2C_SCL_PIN = GPIO_NUM_23; //D5
+
+Adafruit_AHTX0 aht;
+static bool aht_ok = false;
 
 // Button control - decommision the Matter Node
 uint32_t button_time_stamp = 0;                // debouncing control
@@ -56,13 +66,22 @@ void setup() {
 
   //Serial.setDebugOutput(true);
 
-  printf("hello from printf\n");
+  // I2C for AHTx0
+  Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
+  aht_ok = aht.begin(&Wire);
+  if (!aht_ok) {
+    Serial.println("AHTx0 Sensor not found on I2C. Check wiring + address.");
+  }
+  else {
+    Serial.println("AHTx0 OK");
+  }
+
   Serial.println("Matter Humidity and Temperature Sensor Accessory Example");
 
   // set initial humidity sensor measurement
   // Simulated Sensor - it shall initially print 95% and then move to the 10% to 30% humidity range
-  SimulatedHumiditySensor.begin(95.00);
-  SimulatedTemperatureSensor.begin(-25.00);
+  HumiditySensor.begin(95.00);
+  TemperatureSensor.begin(-25.00);
 
   // Matter beginning - Last step, after all EndPoints are initialized
   Matter.begin();
@@ -90,15 +109,21 @@ void setup() {
 void loop() {
   static uint32_t timeCounter = 0;
 
+  sensors_event_t humidity, temp;
+  aht.getEvent(&humidity, &temp);
+
+  const float current_temperature = temp.temperature;
+  const float current_humidity = humidity.relative_humidity;
+
   // Print the current humidity value every 5s
   if (!(timeCounter++ % 10)) {  // delaying for 500ms x 10 = 5s
     // Print the current humidity value
-    Serial.printf("Current Humidity is %.02f%%\r\n", SimulatedHumiditySensor.getHumidity());
-    Serial.printf("Current Temperature is %.02fC\r\n", SimulatedTemperatureSensor.getTemperature());
+    Serial.printf("Current Humidity is %.02f%%\r\n", HumiditySensor.getHumidity());
+    Serial.printf("Current Temperature is %.02fC\r\n", TemperatureSensor.getTemperature());
     // Update Humidity from the (Simulated) Hardware Sensor
     // Matter APP shall display the updated humidity percent
-    SimulatedHumiditySensor.setHumidity(getSimulatedHumidity());
-    SimulatedTemperatureSensor.setTemperature(getSimulatedTemperature());
+    HumiditySensor.setHumidity(current_humidity);
+    TemperatureSensor.setTemperature(current_temperature);
   }
 
   // Check if the button has been pressed
