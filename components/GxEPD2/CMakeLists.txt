@@ -6,4 +6,4 @@ file(GLOB_RECURSE GXEPD2_SRCS
 
 idf_component_register(SRCS ${GXEPD2_SRCS}
                        INCLUDE_DIRS "src"
-                       REQUIRES arduino_esp32 Adafruit-GFX-Library Adafruit_BusIO)
+                       REQUIRES arduino-esp32 Adafruit-GFX-Library Adafruit_BusIO)
