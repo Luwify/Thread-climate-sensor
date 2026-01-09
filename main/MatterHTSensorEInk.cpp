@@ -4,7 +4,7 @@
 #include <Adafruit_AHTX0.h>
 
 // List of Matter Endpoints for this Node
-// Matter Humidity Sensor Endpoint
+// Matter Humidity and Temperature Sensor Endpoint
 MatterTemperatureSensor TemperatureSensor;
 MatterHumiditySensor HumiditySensor;
 
