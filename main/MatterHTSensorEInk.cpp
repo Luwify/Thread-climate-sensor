@@ -12,8 +12,8 @@ MatterHumiditySensor HumiditySensor;
 const uint8_t buttonPin = BOOT_PIN;  // Set your pin here. Using BOOT Button.
 
 // I2C pins for the AHTx0 sensor
-static const int I2C_SDA_PIN = GPIO_NUM_22; //D4
-static const int I2C_SCL_PIN = GPIO_NUM_23; //D5
+static const u_int8_t I2C_SDA_PIN = GPIO_NUM_22; //D4
+static const u_int8_t I2C_SCL_PIN = GPIO_NUM_23; //D5
 
 Adafruit_AHTX0 aht;
 static bool aht_ok = false;
@@ -29,10 +29,6 @@ void setup() {
 
   Serial.begin(115200);
   
-  //while (!Serial) {
-   // delay(100);
-  //}
-
   //Serial.setDebugOutput(true);
 
   // I2C for AHTx0
@@ -45,10 +41,7 @@ void setup() {
     Serial.println("AHTx0 OK");
   }
 
-  Serial.println("Matter Humidity and Temperature Sensor Accessory Example");
-
   // set initial humidity sensor measurement
-  // Simulated Sensor - it shall initially print 95% and then move to the 10% to 30% humidity range
   HumiditySensor.begin(0.00);
   TemperatureSensor.begin(0.00);
 
@@ -63,7 +56,7 @@ void setup() {
     Serial.println("Commission it to your Matter hub with the manual pairing code or QR code");
     Serial.printf("Manual pairing code: %s\r\n", Matter.getManualPairingCode().c_str());
     Serial.printf("QR code URL: %s\r\n", Matter.getOnboardingQRCodeUrl().c_str());
-    // waits for Matter Humidity Sensor Commissioning.
+    // waits for Matter Humidity and Temperature Sensor Commissioning.
     uint32_t timeCount = 0;
     while (!Matter.isDeviceCommissioned()) {
       delay(100);
@@ -86,10 +79,10 @@ void loop() {
 
   // Print the current humidity value every 5s
   if (!(timeCounter++ % 10)) {  // delaying for 500ms x 10 = 5s
-    // Print the current humidity value
+    // Print the current humidity and temperature value
     Serial.printf("Current Humidity is %.02f%%\r\n", HumiditySensor.getHumidity());
     Serial.printf("Current Temperature is %.02fC\r\n", TemperatureSensor.getTemperature());
-    // Update Humidity from the (Simulated) Hardware Sensor
+    // Update Humidity and Temperature from the Hardware Sensor
     // Matter APP shall display the updated humidity percent
     HumiditySensor.setHumidity(current_humidity);
     TemperatureSensor.setTemperature(current_temperature);
