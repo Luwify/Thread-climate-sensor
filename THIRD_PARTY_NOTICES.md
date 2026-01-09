@@ -39,3 +39,27 @@ This project includes third-party software components. The full license texts ar
 - Local modifications:
   - [x] None
   - [ ] Yes
+
+---
+
+## 4) Adafruit GFX Library
+
+- Name: Adafruit-GFX-Library
+- Upstream: https://github.com/adafruit/Adafruit-GFX-Library
+- License: BSD (see the license file inside `components/Adafruit-GFX-Library/`)
+- Included version / commit: 1.12.4
+- Local modifications:
+  - [ ] None
+  - [x] Yes: ESP-IDF integration (e.g., added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
+
+---
+
+## 5) GxEPD2 (Arduino Display Library for SPI E-Paper Displays)
+
+- Name: GxEPD2
+- Upstream: https://github.com/ZinggJM/GxEPD2/
+- License: GNU General Public License v3.0 (see the license file inside `components/GxEPD2/`)
+- Included version / commit: 1.6.5
+- Local modifications:
+  - [ ] None
+  - [x] Yes: ESP-IDF integration (e.g., added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
