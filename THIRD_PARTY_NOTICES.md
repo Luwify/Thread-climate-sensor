@@ -2,8 +2,6 @@
 
 This project includes third-party software components. The full license texts are included in the respective component directories (e.g., `LICENSE`, `LICENSE.txt`, `license.txt`) and apply in addition to the notes below.
 
-> Please update the “Included version / commit” fields to match what you actually vendored.
-
 ---
 
 ## 1) Adafruit AHTX0 Library
