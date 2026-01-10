@@ -1,2 +1,8 @@
 # ESP-IDF build output
 build/
+
+# defined in sdkconfig.defaults
+sdkconfig
+sdkconfig.old
+
+managed_components/
