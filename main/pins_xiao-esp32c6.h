@@ -9,15 +9,16 @@ static const uint8_t LED_BUILTIN = 15;
 
 static const uint8_t TX = 16;
 static const uint8_t RX = 17;
+*/
+// varying from the pins_arduino.h for esp32c6
+static const uint8_t XIAO_SDA = 22;
+static const uint8_t XIAO_SCL = 23;
 
-static const uint8_t SDA = 22;
-static const uint8_t SCL = 23;
-
-static const uint8_t SS = 21;
-static const uint8_t MOSI = 18;
-static const uint8_t MISO = 20;
-static const uint8_t SCK = 19;
-
+static const uint8_t XIAO_SS = 21;
+static const uint8_t XIAO_MOSI = 18;
+static const uint8_t XIAO_MISO = 20;
+static const uint8_t XIAO_SCK = 19;
+/*
 static const uint8_t A0 = 0;
 static const uint8_t A1 = 1;
 static const uint8_t A2 = 2;
