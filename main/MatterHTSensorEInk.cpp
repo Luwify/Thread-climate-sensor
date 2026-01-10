@@ -2,6 +2,7 @@
 #include <Matter.h>
 #include <Wire.h>
 #include <Adafruit_AHTX0.h>
+#include "pins_xiao-esp32c6.h"
 
 // List of Matter Endpoints for this Node
 // Matter Humidity and Temperature Sensor Endpoint
@@ -10,10 +11,6 @@ MatterHumiditySensor HumiditySensor;
 
 // set your board USER BUTTON pin here - decommissioning button
 const uint8_t buttonPin = BOOT_PIN;  // Set your pin here. Using BOOT Button.
-
-// I2C pins for the AHTx0 sensor
-static const u_int8_t I2C_SDA_PIN = GPIO_NUM_22; //D4
-static const u_int8_t I2C_SCL_PIN = GPIO_NUM_23; //D5
 
 Adafruit_AHTX0 aht;
 static bool aht_ok = false;
@@ -32,7 +29,7 @@ void setup() {
   //Serial.setDebugOutput(true);
 
   // I2C for AHTx0
-  Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
+  Wire.begin(SDA, SCL);
   aht_ok = aht.begin(&Wire);
   if (!aht_ok) {
     Serial.println("AHTx0 Sensor not found on I2C. Check wiring + address.");
