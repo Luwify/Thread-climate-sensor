@@ -3,28 +3,32 @@
 #include <Fonts/FreeMonoBold24pt7b.h> 
 #include <Fonts/FreeSansBold24pt7b.h>
 #include <Fonts/FreeSansBold12pt7b.h>
-#include "FreeSansBold36pt7b.h"
-#include "FreeSansBold30pt7b.h"
+#include <Fonts/FreeSansBold36pt7b.h>
+#include <Fonts/FreeSansBold30pt7b.h>
 #include "pins_xiao-esp32c6.h"
 
 // ESP32-C6 CS(SS)=21,SCL(SCK)=19,SDA(MOSI)=18,BUSY=3,RES(RST)=2,DC=1
-#define CS_PIN SS
+#define CS_PIN XIAO_SS
 #define BUSY_PIN 2
 #define RES_PIN 1
 #define DC_PIN 0
 
-// Update behavior
-static const uint32_t SENSOR_READ_INTERVAL_MS = 2000;
-static const float TEMP_DELTA_C = 0.1f;               
-static const float HUM_DELTA_PCT = 3.0f;              
-static const uint8_t FULL_REFRESH_EVERY_N_CHANGES = 30;
-static int8_t tempDir = 0; // -1 down, 0 same/unknown, +1 up
-static int8_t humDir  = 0;
+int8_t tempDir = 0; // -1 down, 0 same/unknown, +1 up
+int8_t humDir  = 0;
 
 // 1.54'' EPD Module
-GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(/*CS=5*/ CS_PIN, /*DC=*/ DC_PIN, /*RES=*/ RES_PIN, /*BUSY=*/ BUSY_PIN)); // GDEH0154D67 200x200, SSD1681
+GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(/*CS=21*/ CS_PIN, /*DC=*/ DC_PIN, /*RES=*/ RES_PIN, /*BUSY=*/ BUSY_PIN)); // GDEH0154D67 200x200, SSD1681
 
-static void drawTrendArrow(int16_t cx, int16_t cy, int8_t dir, int16_t s = 7)
+void init_display()
+{
+  pinMode(CS_PIN, OUTPUT);
+  pinMode(DC_PIN, OUTPUT);
+  pinMode(RES_PIN, OUTPUT);
+  pinMode(BUSY_PIN, INPUT);
+  display.init(115200, true, 50, false);
+}
+
+void drawTrendArrow(int16_t cx, int16_t cy, int8_t dir, int16_t s = 7)
 {
   // cx,cy = arrow center; s = size
   if (dir > 0)
@@ -44,7 +48,7 @@ static void drawTrendArrow(int16_t cx, int16_t cy, int8_t dir, int16_t s = 7)
   }
 }
 
-static void drawTemperatureText(float tempC, int8_t dir)
+void drawTemperatureText(float tempC, int8_t dir)
 {
   display.setFont(&FreeSansBold30pt7b);
   display.setTextColor(GxEPD_BLACK);
@@ -69,7 +73,7 @@ static void drawTemperatureText(float tempC, int8_t dir)
   display.print("C");
 }
 
-static void drawHumidityText(float hum, int8_t dir)
+void drawHumidityText(float hum, int8_t dir)
 {
   display.setFont(&FreeSansBold30pt7b);
   display.setTextColor(GxEPD_BLACK);
@@ -87,7 +91,7 @@ static void drawHumidityText(float hum, int8_t dir)
   display.print("%");
 }
 
-static void drawTHFull(float tempC, float hum)
+void drawTHFull(float tempC, float hum)
 {
   display.setRotation(1);
   const uint16_t w = display.width();
@@ -105,7 +109,7 @@ static void drawTHFull(float tempC, float hum)
   } while (display.nextPage());
 }
 
-static void drawTempPartial(float tempC)
+void drawTempPartial(float tempC)
 {
   display.setRotation(1);
   const uint16_t w = display.width();
@@ -127,7 +131,7 @@ static void drawTempPartial(float tempC)
   } while (display.nextPage());
 }
 
-static void drawHumPartial(float hum)
+void drawHumPartial(float hum)
 {
   display.setRotation(1);
   const uint16_t w = display.width();
