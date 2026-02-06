@@ -6,3 +6,4 @@ sdkconfig
 sdkconfig.old
 
 managed_components/
+Matter_over_Thread_HT_Sensor_E_ink.code-workspace
