@@ -12,7 +12,7 @@ This project includes third-party software components. The full license texts ar
 - Included version / commit: 2.0.5
 - Local modifications:
   - [ ] None
-  - [x] Yes: ESP-IDF integration (e.g., added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
+  - [x] Yes: ESP-IDF integration (added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
 
 ---
 
@@ -24,7 +24,7 @@ This project includes third-party software components. The full license texts ar
 - Included version / commit: 1.1.15
 - Local modifications:
   - [ ] None
-  - [x] Yes: ESP-IDF integration (e.g., added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
+  - [x] Yes: ESP-IDF integration (added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
 
 ---
 
@@ -48,7 +48,7 @@ This project includes third-party software components. The full license texts ar
 - Included version / commit: 1.12.4
 - Local modifications:
   - [ ] None
-  - [x] Yes: ESP-IDF integration (e.g., added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
+  - [x] Yes: ESP-IDF integration (added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
 
 ---
 
@@ -60,4 +60,4 @@ This project includes third-party software components. The full license texts ar
 - Included version / commit: 1.6.5
 - Local modifications:
   - [ ] None
-  - [x] Yes: ESP-IDF integration (e.g., added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
+  - [x] Yes: ESP-IDF integration (added/adjusted `CMakeLists.txt` so it builds as an ESP-IDF component)
